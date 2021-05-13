@@ -1,0 +1,23 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout the Repository
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+      name: Set Up Python
+    - run: python -m pip install -r requirements.txt
+      name: Install Dependencies
+    - run: gallery-build
+      name: Build the Gallery
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4
+      with:
+        branch: gh-pages
+        folder: public
